@@ -1,0 +1,27 @@
+该源代码中提供了两种模板类，一种是使用中DEQUE技术的，一种是单纯链表类用于没有MFC环境。
+用法分别如下：
+一、纯链表：
+1. 将以下文件考入工程源代码中。
+   文件："DoubleDIRListContainer.h","DoubleDIRList.h"
+2. 在使用该链表模板的位置引用"DoubleDIRListContainer.h"这个头文件。
+3. 在代码中创建模板类对象。
+   如：CDoubleDIRListContainer<int> DoubleDIRListContainer;
+   或：CDoubleDIRListContainer<CTestStation *> m_DobleDirList;
+4. 将数据与链表绑定。
+   如：int a[100];
+       DoubleDIRListContainer.PushBack(a[i]);
+   或：CTestStation m_arrCDequeForListContainer[10];
+       m_DobleDirList.PushBack(&m_arrCDequeForListContainer[i]);
+
+二、Deque链表：
+1. 将以下文件考入工程源代码中。
+   文件："DequeForListContainer.h","DoubleDIRList.h"
+2. 在使用该链表模板的位置引用"DoubleDIRListContainer.h"这个头文件。
+3. 在代码中创建模板类对象。
+   如：CDequeForListContainer<int> DequeForListContainer;
+   或：CDequeForListContainer<CTestStation *> m_DequedobleDirList;
+4. 将数据与链表绑定。
+   如：int a[100];
+       DequeForListContainer.push_back(a[i]);
+   或：CTestStation m_arrCDequeForListContainer[10];
+       m_DequedobleDirList.push_back(&m_arrCDequeForListContainer[i]);
