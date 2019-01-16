@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "RecordingVideo.h"
-#include "PUB/FileOperation/CFileOpertion.h"
+#include "FileOperation/CFileOpertion.h"
 
 RecordingVideo::RecordingVideo()
 {

@@ -1,5 +1,5 @@
 #pragma once
-
+#pragma warning(disable:4996)
 #include "stdafx.h"
 
 #include <algorithm>
@@ -20,7 +20,9 @@
 #include "opencv2/core/core_c.h"
 #include "opencv2/highgui/highgui_c.h"
 #include <opencv2/ml/ml.hpp>
+#include<deque>
 
+using namespace std;
 using namespace cv;
 
 typedef struct _GrayRings
@@ -66,5 +68,11 @@ public:
 
 	//计算图像内正方型内切圆以外部分亮度，并返回内切圆图像
 	static int GetAvgLight(IN Mat p_mRecognitionImage, OUT Mat* p_pCircleImage);
+
+	//计算两点间距离
+	static int CalculateDistance2Point(Point p_pointA,Point p_pointB,Point& p_pointOutput);
+
+	//生成向量能量曲线
+	static int BuildEnergyCurve(Mat p_matDataSrc, Mat& p_matDst, Scalar p_colorDisplay, deque<Point>& lines);
 };
 

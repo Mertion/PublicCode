@@ -124,3 +124,32 @@ int RecognitionFunction::GetAvgLight(IN Mat p_mRecognitionImage, OUT Mat* p_pCir
 
 	return t_nAvgLight;
 }
+
+int RecognitionFunction::CalculateDistance2Point(Point p_pointA, Point p_pointB, Point& p_pointOutput)
+{
+	int x = 0;
+	int y = 0;
+	int Distance = 0;
+	p_pointOutput = p_pointB - p_pointA;
+
+	x = p_pointOutput.x;
+	y = p_pointOutput.y;
+
+	Distance = sqrt(x * x + y * y);
+	return Distance;
+}
+
+int RecognitionFunction::BuildEnergyCurve(Mat p_matDataSrc, Mat& p_matDst, Scalar p_colorDisplay, deque<Point>& lines)
+{
+	for (int i = 0; i < lines.size(); i++)
+	{
+		Point t_Point = lines.at(i);
+		//draw_img.at<Vec3b>(lines[i][j]) = Vec3b(p_colorDisplay[0], p_colorDisplay[1], p_colorDisplay[2]);
+		int t_nVal = p_matDataSrc.at<ushort>(t_Point.y, t_Point.x);
+		t_nVal /= 100;
+		t_nVal *= 30;
+		t_nVal /= 255;
+		p_matDst.at<Vec3b>(t_nVal, t_Point.x) = Vec3b(p_colorDisplay[0], p_colorDisplay[1], p_colorDisplay[2]);
+	}
+	return 0;
+}
