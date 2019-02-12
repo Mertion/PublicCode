@@ -51,7 +51,13 @@
 #endif // _MSC_VER = 1800 
 #else
 #if (_MSC_VER == 1800)
+#ifdef  UNICODE 
+#pragma comment(lib,"./json_vc12_libmtd_Unicode") 
+//#pragma comment(lib,"./PublicCode/Head File/json/Lib/json_vc12_libmtd_Unicode")
+//#pragma comment(lib,"./json/Lib/json_vc12_libmtd_Unicode")
+#else
 #pragma comment(lib,"./Lib/json_vc12_libmtd") 
+#endif
 #endif // _MSC_VER = 1800 
 #if (_MSC_VER == 1400)
 #pragma comment(lib,"./Lib/json_vc8_libmtd")
