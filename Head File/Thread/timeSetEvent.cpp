@@ -6,7 +6,7 @@
 ///////////////////////////////////////////////////////////
 #include "stdafx.h"
 #include "timeSetEvent.h"
-#include <minwindef.h>
+//#include <minwindef.h>
 
 #pragma comment(lib,"comctl32.lib") 
 #pragma comment(lib,"winmm.lib")

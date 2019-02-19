@@ -20,7 +20,7 @@ bool CFileOpertion::FindFile(char * p_cstrFilePath)
 	CStringA strFormat;
 
 	strFormat.Format("%s", p_cstrFilePath);
-	CStringW strFilePath;
+	CString strFilePath;
 	strFilePath = strFormat;
 	BOOL bFound = cFinder.FindFile(strFilePath);
 
@@ -102,7 +102,7 @@ void CFileOpertion::ClearFile(CString p_strFileName, int p_nDays)
 		int t_nDays = (int)TimeDiff.GetDays();
 		if (t_nDays >= p_nDays)
 		{
-			DeleteFile((CStringW)FilePath[i]);
+			DeleteFile((CString)FilePath[i]);
 		}
 	}
 	t_Finder.Close();
