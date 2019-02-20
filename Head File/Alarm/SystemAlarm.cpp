@@ -76,7 +76,10 @@ void SystemAlarm::Warning(int p_nWarningNo, CString p_strWarning)
 	t_AlarmInfo.AlarmNo = p_nWarningNo;
 	memcpy(t_AlarmInfo.arrchrAlarmInfo, (CStringA)p_strWarning, ((CStringA)p_strWarning).GetLength());
 	m_pCSingletonLogger->Wirtelog(CLoger::ENUM_LOGSWITCH_WARNING, "Warning: No %d, %s", t_AlarmInfo.AlarmNo, t_AlarmInfo.arrchrAlarmInfo);
-	m_pfuncSetAlarmInfo(t_AlarmInfo);
+	if (NULL != m_pfuncSetAlarmInfo)
+	{
+		m_pfuncSetAlarmInfo(t_AlarmInfo);
+	}
 }
 
 void SystemAlarm::Warning(int P_nWarningNo)
