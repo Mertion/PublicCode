@@ -30,8 +30,8 @@ typedef struct _AlarmUnit :public AlarmInfo
 }AlarmUnit;
 
 //设置报警信息回调函数
-typedef void(WINAPI *pfuncSetAlarmInfo) (AlarmInfo);
-
+//typedef void(WINAPI *pfuncSetAlarmInfo) (AlarmInfo);
+typedef void( *pfuncSetAlarmInfo) (AlarmInfo);
 //报警类
 class SystemAlarm
 {
