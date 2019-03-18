@@ -87,12 +87,12 @@ int ClassEventThread::Start()
 		{
 			ResetEvent(m_hExit);
 			ResetEvent(m_hActive);
-			m_hThredHandle = (HANDLE)_beginthreadex(NULL,         // security
-				0,            // stack size
-				exThreadTask,
-				this,           // arg list
-				m_uiInitFlag,
-				&m_uiThreadID);
+			m_hThredHandle = (HANDLE)_beginthreadex(NULL,         // security 安全性 NULL 表示默认安全性
+				m_nMemorySize,	// stack size 线程的堆栈大小，默认为0
+				exThreadTask,	//线程回调函数
+				this,           // arg list	线程参数
+				m_uiInitFlag,	//初始状态，0表示立即执行
+				&m_uiThreadID);	//线程句柄
 			if (NULL == m_hThredHandle)
 			{
 				return ENUM_THREADINFO_CREATTHREADFAILD;
@@ -150,4 +150,9 @@ void ClassEventThread::SetInitFlag(unsigned p_uiInitFlag)
 void ClassEventThread::TriggerThread()
 {
 	SetEvent(m_hActive);
+}
+
+void ClassEventThread::SetMemorySize(int p_nMemorySize)
+{
+	m_nMemorySize = p_nMemorySize;
 }

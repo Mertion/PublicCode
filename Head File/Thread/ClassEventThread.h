@@ -36,7 +36,11 @@ public:
 	void SetInitFlag(unsigned p_uiInitFlag);
 	//触发一次线程执行
 	void TriggerThread();
+	//设置内存堆栈大小，在线程启动前设置有效
+	void SetMemorySize(int p_nMemorySize);
 protected:
+	//内存堆栈大小
+	int m_nMemorySize = 0;
 	//线程句柄
 	HANDLE m_hThredHandle = NULL;
 	//线程初始状态: 0-立即运行,CREATE_SUSPEND-创建后挂起
