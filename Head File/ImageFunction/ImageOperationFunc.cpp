@@ -85,3 +85,29 @@ void iplImageToBmp(IN IplImage *ipl, IN int nBpp,OUT byte* p_pbyteBmp,OUT int& p
 	//释放资源
 	GlobalFree(hGlobal); // 使用Bitmap完后，需要释放资源，以免造成内存泄漏。  
 }
+
+//提取二值图
+int Binarization(Mat p_mat, int p_nBinarizationThreshold, Mat* p_matDst)
+{
+	*p_matDst = Mat::zeros(cvSize(p_mat.cols, p_mat.rows), CV_8UC1);
+
+	//二值化
+	for (int y = 0; y < p_mat.rows; y++)
+	{
+		for (int x = 0; x < p_mat.cols; x++)
+		{
+			int t_nVal1 = p_mat.at<ushort>(y, x);
+
+			if (t_nVal1 < p_nBinarizationThreshold)
+			{
+				p_matDst->at<uchar>(y, x) = 0;
+			}
+			else
+			{
+				//直接二值化
+				p_matDst->at<uchar>(y, x) = 255;
+			}
+		}
+	}
+	return 0;
+}

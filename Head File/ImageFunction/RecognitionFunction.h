@@ -73,6 +73,6 @@ public:
 	static int CalculateDistance2Point(Point p_pointA,Point p_pointB,Point& p_pointOutput);
 
 	//生成向量能量曲线
-	static int BuildEnergyCurve(Mat p_matDataSrc, Mat& p_matDst, Scalar p_colorDisplay, deque<Point>& lines);
+	static int BuildEnergyCurve(Mat p_matDataSrc, Mat& p_matDst, Mat& p_matDstDisplay, Scalar p_colorDisplay, deque<Point>& lines);
 };
 

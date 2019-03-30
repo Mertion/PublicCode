@@ -33,3 +33,5 @@ typedef enum
 VOID ImageReversal(IN OUT IplImage **p_iplImage, IN ReversalMode mode);
 //转换iplimage到bmp图像
 void iplImageToBmp(IN IplImage *ipl, IN int nBpp, OUT byte* p_pbyteBmp, OUT int& p_nBmpSize);
+//提取二值图
+int Binarization(Mat p_mat, int p_nBinarizationThreshold, Mat* p_matDst);
