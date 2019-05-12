@@ -73,8 +73,13 @@
 #else  
 #if defined(_MT) && defined(_DLL)
 #if (_MSC_VER == 1800)
+#ifdef  UNICODE 
+#pragma comment(lib,"./Lib/json_vc12_libmdd_Unicode_x64") 
+//#pragma comment(lib,"json_vc12_libmdd_Unicode_x64") 
+#else	//UNICODE
 #pragma comment(lib,"./Lib/json_vc12_libmdd_x64") 
 #endif // _MSC_VER = 1800 
+#endif 
 #else
 #ifdef  UNICODE 
 #if (_MSC_VER == 1800)
