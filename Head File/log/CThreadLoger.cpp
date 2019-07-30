@@ -11,7 +11,7 @@ CThreadLoger* CThreadLoger::initance()
 {
 	if (NULL == m_pThreadLoger->m_pClassEventThread)
 	{
-		m_pThreadLoger->m_pClassEventThread = new ClassEventThread();
+		m_pThreadLoger->m_pClassEventThread = new ClassSemaphoreThread(100,100);
 		m_pThreadLoger->m_pClassEventThread->SetArg(m_pThreadLoger);
 		m_pThreadLoger->m_pClassEventThread->SetFunction(_exThread);
 		m_pThreadLoger->m_pClassEventThread->Start();
@@ -103,6 +103,7 @@ int CThreadLoger::ThreadWriteLog()
 	{
 		CStringA strLog = m_DQLogInfo.front().strLog;
 		OnlyWirteToFile(strLog);
+		m_DQLogInfo.pop_front();
 	}
 	m_csDQLog.Unlock();
 

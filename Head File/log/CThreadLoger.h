@@ -1,6 +1,7 @@
 #pragma once
 #include "CLoger.h"
 #include "Thread/ClassEventThread.h"
+#include "Thread/ClassSemaphoreThread.h"
 #include <deque>
 
 using namespace std;
@@ -44,7 +45,7 @@ private:
 	//自身单例指针
 	static CThreadLoger* m_pThreadLoger;
 	//日志记录线程
-	ClassEventThread* m_pClassEventThread = NULL;
+	ClassSemaphoreThread* m_pClassEventThread = NULL;
 	//日志数据队列
 	DQLogInfo m_DQLogInfo;
 	//发送数据临界区
