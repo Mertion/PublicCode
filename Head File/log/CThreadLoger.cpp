@@ -11,7 +11,7 @@ CThreadLoger* CThreadLoger::initance()
 {
 	if (NULL == m_pThreadLoger->m_pClassEventThread)
 	{
-		m_pThreadLoger->m_pClassEventThread = new ClassSemaphoreThread(100,100);
+		m_pThreadLoger->m_pClassEventThread = new ClassSemaphoreThread(0,100);
 		m_pThreadLoger->m_pClassEventThread->SetArg(m_pThreadLoger);
 		m_pThreadLoger->m_pClassEventThread->SetFunction(_exThread);
 		m_pThreadLoger->m_pClassEventThread->Start();
