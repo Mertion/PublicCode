@@ -111,3 +111,34 @@ int Binarization(Mat p_mat, int p_nBinarizationThreshold, Mat* p_matDst)
 	}
 	return 0;
 }
+
+
+//16位灰度图均值，以5*5矩阵进行图像均值处理
+int ImageMatrixAvg16(Mat &src)
+{
+	IplImage *t_iplSrc = cvCreateImage(src.size(), IPL_DEPTH_16U, 1);
+	cvCopy(&IplImage(src), t_iplSrc);
+	for (int y = 0;y< t_iplSrc->height ;y++)
+	{
+		for (int x =0;x<t_iplSrc->width;x++)
+		{
+			//计算均值
+			int tVal = 0;
+			for (int y1= y-2;y1<=y+2;y++)
+			{
+				for (int x1 = x-2;x1<=x+2;x1++)
+				{
+					x1 = x1 < 0 ? 0 : x1;
+					x1 = x1 >= t_iplSrc->width ? t_iplSrc->width - 1 : x1;
+					y1 = y1 < 0 ? 0 : y1;
+					y1 = y1 >= t_iplSrc->height ? t_iplSrc->height - 1 : y1;
+					tVal += *(t_iplSrc->imageData + x1 * 2 + y1 * t_iplSrc->widthStep);
+				}
+			}
+			tVal /= 25;
+			src.at<ushort>(y, x) = tVal;
+		}
+	}
+
+	cvReleaseImage(&t_iplSrc);
+}

@@ -35,3 +35,5 @@ VOID ImageReversal(IN OUT IplImage **p_iplImage, IN ReversalMode mode);
 void iplImageToBmp(IN IplImage *ipl, IN int nBpp, OUT byte* p_pbyteBmp, OUT int& p_nBmpSize);
 //提取二值图
 int Binarization(Mat p_mat, int p_nBinarizationThreshold, Mat* p_matDst);
+//16位灰度图均值，以5*5矩阵进行图像均值处理
+int ImageMatrixAvg16(Mat &src);
