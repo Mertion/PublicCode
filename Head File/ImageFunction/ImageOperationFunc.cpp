@@ -124,21 +124,30 @@ int ImageMatrixAvg16(Mat &src)
 		{
 			//¼ÆËã¾ùÖµ
 			int tVal = 0;
-			for (int y1= y-2;y1<=y+2;y++)
+			int tTimes = 0;
+			for (int y1= y-2;y1<=y+2;y1++)
 			{
 				for (int x1 = x-2;x1<=x+2;x1++)
 				{
-					x1 = x1 < 0 ? 0 : x1;
-					x1 = x1 >= t_iplSrc->width ? t_iplSrc->width - 1 : x1;
-					y1 = y1 < 0 ? 0 : y1;
-					y1 = y1 >= t_iplSrc->height ? t_iplSrc->height - 1 : y1;
-					tVal += *(t_iplSrc->imageData + x1 * 2 + y1 * t_iplSrc->widthStep);
+					int x2, y2;
+					x2 = x1 < 0 ? 0 : x1;
+					x2 = x2 >= t_iplSrc->width ? t_iplSrc->width - 1 : x2;
+					y2 = y1 < 0 ? 0 : y1;
+					y2 = y2 >= t_iplSrc->height ? t_iplSrc->height - 1 : y2;
+					tVal += (*(ushort*)(t_iplSrc->imageData + x2 * 2 + y2 * t_iplSrc->widthStep));
+					tTimes++;
 				}
 			}
 			tVal /= 25;
 			src.at<ushort>(y, x) = tVal;
+			if ((x == 242) && y==197)
+			{
+				tTimes = tTimes;
+			}
 		}
 	}
 
 	cvReleaseImage(&t_iplSrc);
+
+	return 0;
 }
