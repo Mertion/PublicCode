@@ -20,7 +20,9 @@
 //  Debug 	Dynamic Link(DLL)	/ MDd	MSVCRTD	_DEBUG, _MT, and _DLL
 
 //开发环境宏定义说明
+//Visual Studio2019 _MSC_VER != 1923
 //Visual Studio2017 _MSC_VER != 1914
+//Visual Studio2015 _MSC_VER != 1900
 //Visual Studio2013 _MSC_VER != 1800
 //Visual Studio2012 _MSC_VER != 1700
 //Visual Studio2010 _MSC_VER != 1600
@@ -31,7 +33,7 @@
 
 //lzg 20160308 start
 //根据编译器和运行库模式加载不同JSON库
-#if (_MSC_VER != 1800) && (_MSC_VER != 1400) && (_MSC_VER != 1914)
+#if (_MSC_VER != 1800) && (_MSC_VER != 1400) && (_MSC_VER != 1914)&& (_MSC_VER != 1923)
 #error Please build the lib switch for model
 #endif
 
