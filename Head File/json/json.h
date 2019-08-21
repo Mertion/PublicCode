@@ -1,12 +1,12 @@
 #ifndef JSON_JSON_H_INCLUDED
 # define JSON_JSON_H_INCLUDED
+#endif
 
 # include "autolink.h"
 # include "value.h"
 # include "reader.h"
 # include "writer.h"
 # include "features.h"
-
 
 //#include "json/json.h" 
 
@@ -105,7 +105,6 @@
 #else  
 #error Please build the lib switch for model
 #pragma comment(lib,"./Lib/json_mt_x64.lib")  
-#endif  
 #endif
 //lzg 20160308 end
 
