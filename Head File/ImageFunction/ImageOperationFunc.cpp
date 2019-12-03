@@ -140,10 +140,10 @@ int ImageMatrixAvg16(Mat &src)
 			}
 			tVal /= 25;
 			src.at<ushort>(y, x) = tVal;
-			if ((x == 242) && y==197)
-			{
-				tTimes = tTimes;
-			}
+			//if ((x == 242) && y==197)
+			//{
+			//	tTimes = tTimes;
+			//}
 		}
 	}
 
