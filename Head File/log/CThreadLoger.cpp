@@ -72,7 +72,7 @@ void CThreadLoger::OnlyWirteToFile(CStringA p_strLogInfo)
 	if (NULL != WFile)
 	{
 		fwrite(p_strLogInfo, 1, p_strLogInfo.GetLength(), WFile);
-		fwrite("\r\n", 1, 2, WFile);
+		fwrite("\n", 1, 1, WFile);
 	}
 }
 
