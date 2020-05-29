@@ -37,3 +37,5 @@ void iplImageToBmp(IN IplImage *ipl, IN int nBpp, OUT byte* p_pbyteBmp, OUT int&
 int Binarization(Mat p_mat, int p_nBinarizationThreshold, Mat* p_matDst);
 //16位灰度图均值，以5*5矩阵进行图像均值处理
 int ImageMatrixAvg16(Mat &src);
+//16位灰度图均值，以3*3矩阵进行图像均值处理
+int ImageMatrixAvg163X3(Mat& src, int p_nStep = 1);
