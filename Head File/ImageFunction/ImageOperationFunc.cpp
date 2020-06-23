@@ -197,3 +197,48 @@ int ImageMatrixAvg163X3(Mat& src, int p_nStep /*= 3*/)
 
 	return 0;
 }
+
+
+
+//16位灰度图均值，以矩阵形式进行图像均值处理
+//p_nStep:0 3*3,2 5*5 表示以当前点向x、y方向延伸的步长
+int ImageMatrixAvg16Step(Mat& src, int p_nStep /*= 3*/)
+{
+	Mat tSwap = src.clone();
+	IplImage* t_iplSrc = &(IplImage)src;
+	if (p_nStep < 1)
+	{
+		return 1;
+	}
+	for (int y = 0; y < t_iplSrc->height; y++)
+	{
+		for (int x = 0; x < t_iplSrc->width; x++)
+		{
+			//计算均值
+			int tVal = 0;
+			int tTimes = 0;
+			for (int y1 = y - p_nStep; y1 <= y + p_nStep; y1++)
+			{
+				for (int x1 = x - p_nStep; x1 <= x + p_nStep; x1++)
+				{
+					int x2, y2;
+					x2 = x1 < 0 ? 0 : x1;
+					x2 = x2 >= t_iplSrc->width ? t_iplSrc->width - 1 : x2;
+					y2 = y1 < 0 ? 0 : y1;
+					y2 = y2 >= t_iplSrc->height ? t_iplSrc->height - 1 : y2;
+					tVal += (*(ushort*)(tSwap.data + x2 * 2 + y2 * t_iplSrc->widthStep));
+					tTimes++;
+				}
+			}
+			tVal /= tTimes;
+			//src.at<ushort>(y, x) = tVal;
+			(*(ushort*)(t_iplSrc->imageData + x * 2 + y * t_iplSrc->widthStep)) = tVal;
+			//if ((x == 242) && y==197)
+			//{
+			//	tTimes = tTimes;
+			//}
+		}
+	}
+
+	return 0;
+}
