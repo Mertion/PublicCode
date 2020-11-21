@@ -112,6 +112,119 @@ int Binarization(Mat p_mat, int p_nBinarizationThreshold, Mat* p_matDst)
 	return 0;
 }
 
+int IsGreaterMinimumBrightness(Mat* p_src, Mat& p_Make, std::vector<std::vector<cv::Point> >::iterator itc
+	, int m_nMinBrightness, int m_nMaxGrayscale, int m_nMinBrightnessPixelsTotal, int m_nDefectAreaMin, int m_nDefectAreaMax)
+{
+	int t_nType = p_src->type();
+	//遍历轮廓内像素点
+	Rect rect = boundingRect(*itc);
+	int t_nPixelsCount = 0;
+	int t_nNonZeroPointCout = 0;
+	int t_nAvg = 0;
+	int t_nCounter = 0;
+
+	for (int y = rect.y; y < (rect.y + rect.height); y++)
+	{
+		for (int x = rect.x; x < (rect.x + rect.width); x++)
+		{
+			cv::Point t_point;
+			t_point.x = x;
+			t_point.y = y;
+			int nVal = p_Make.at<uchar>(y, x);
+			//判断点是否在轮廓内, 为了提高运算效率不再判断点是否在轮廓内
+			//if (pointPolygonTest(*itc, t_point, 0) >= 0)
+			if (nVal > 0)
+			{
+				int t_nLight = 0;
+
+				t_nLight = p_src->at<ushort>(y, x);
+
+				//如果亮度大于最小亮度亮度计数++
+				if (t_nLight > m_nMinBrightness)
+				{
+					t_nPixelsCount++;
+				}
+				//如果亮度大于二值化门槛亮度，非零点计数++
+				if (t_nLight >= m_nMaxGrayscale)
+				{
+					t_nNonZeroPointCout++;
+				}
+
+				t_nCounter++;
+				t_nAvg += t_nLight;
+			}
+		}
+	}
+
+	//求平均重量
+	if (t_nCounter > 0)
+	{
+		t_nAvg /= t_nCounter;
+	}
+	else
+	{
+		t_nAvg = 0;
+	}
+
+	//如果同时满足最小亮度和面积条件，认为是缺陷
+	if ((t_nPixelsCount > m_nMinBrightnessPixelsTotal)
+		&& (t_nNonZeroPointCout > m_nDefectAreaMin && t_nNonZeroPointCout < m_nDefectAreaMax))
+	{
+		return true;
+	}
+	return false;
+}
+
+int DefectRecognition(Mat* p_mat, Mat* p_matBinaryvalue, const int p_nOffsetX, const int p_nOffsetY, int p_nMin, int p_nMax)
+{
+	Mat t_mat = p_matBinaryvalue->clone();
+	//确定连通体位置
+	std::vector<std::vector<cv::Point> >contours;
+	//Mat Src(t_matThreshold, true);
+	findContours(t_mat, contours, CV_RETR_LIST, CV_CHAIN_APPROX_NONE);
+
+	////轮廓过滤,去掉小于最小尺寸的轮廓
+	std::vector<std::vector<cv::Point> >::iterator itc = contours.begin();
+	int nIndex = 0;
+	while (itc != contours.end())
+	{
+		if ((itc->size() < p_nMin) || (itc->size() > p_nMax))
+		{
+			//只是遍历没必要踢出队列
+			//itc = contours.erase(itc);
+
+			//在缺陷图上将不符合条件的部分填充成黑色
+			cv::drawContours(*p_mat, contours, nIndex, cv::Scalar(0), CV_FILLED, 8);
+		}
+		else
+		{
+			
+
+			////标记当前轮廓区域
+			//Mat tmatMake = Mat::zeros(p_mat->size(), CV_8UC1);
+			//cv::drawContours(tmatMake, contours, nIndex, cv::Scalar(255), CV_FILLED, 8);
+			////获取轮廓是否大于最小亮度要求
+			//bool t_bMinBright = IsGreaterMinimumBrightness(p_mat, tmatMake, itc,10,20,20,20,10000);
+			////如果不符合要求从当前队列中剔除
+			//if (!t_bMinBright)
+			//{
+			//	//只是遍历没必要踢出队列
+			//	//itc = contours.erase(itc);
+			//}
+			//else
+			//{
+			//	//存储缺陷结果
+			//	//SaveDefect(p_nOffsetX, p_nOffsetY, itc);
+
+			//}
+			//tmatMake.release();
+		}
+
+		itc++;
+		nIndex++;
+	}
+	return 0;
+}
 
 //16位灰度图均值，以5*5矩阵进行图像均值处理
 //使用原数据处理
