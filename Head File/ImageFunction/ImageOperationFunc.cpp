@@ -183,46 +183,59 @@ int DefectRecognition(Mat* p_mat, Mat* p_matBinaryvalue, const int p_nOffsetX, c
 	//Mat Src(t_matThreshold, true);
 	findContours(t_mat, contours, CV_RETR_LIST, CV_CHAIN_APPROX_NONE);
 
-	////轮廓过滤,去掉小于最小尺寸的轮廓
-	std::vector<std::vector<cv::Point> >::iterator itc = contours.begin();
-	int nIndex = 0;
-	while (itc != contours.end())
+	int nSize = contours.size();
+	int t_nThreads = 10;
+#pragma omp parallel for num_threads(t_nThreads)
+	for (int i = 0;i<nSize;i++)
 	{
-		if ((itc->size() < p_nMin) || (itc->size() > p_nMax))
+		std::vector<cv::Point>* ptr = &contours.at(i)  ;
+		if ((ptr->size() < p_nMin) || (ptr->size() > p_nMax))
 		{
-			//只是遍历没必要踢出队列
-			//itc = contours.erase(itc);
-
 			//在缺陷图上将不符合条件的部分填充成黑色
-			cv::drawContours(*p_mat, contours, nIndex, cv::Scalar(0), CV_FILLED, 8);
+			cv::drawContours(*p_mat, contours, i, cv::Scalar(0), CV_FILLED, 8);
 		}
-		else
-		{
-			
-
-			////标记当前轮廓区域
-			//Mat tmatMake = Mat::zeros(p_mat->size(), CV_8UC1);
-			//cv::drawContours(tmatMake, contours, nIndex, cv::Scalar(255), CV_FILLED, 8);
-			////获取轮廓是否大于最小亮度要求
-			//bool t_bMinBright = IsGreaterMinimumBrightness(p_mat, tmatMake, itc,10,20,20,20,10000);
-			////如果不符合要求从当前队列中剔除
-			//if (!t_bMinBright)
-			//{
-			//	//只是遍历没必要踢出队列
-			//	//itc = contours.erase(itc);
-			//}
-			//else
-			//{
-			//	//存储缺陷结果
-			//	//SaveDefect(p_nOffsetX, p_nOffsetY, itc);
-
-			//}
-			//tmatMake.release();
-		}
-
-		itc++;
-		nIndex++;
 	}
+
+	//////轮廓过滤,去掉小于最小尺寸的轮廓
+	//std::vector<std::vector<cv::Point> >::iterator itc = contours.begin();
+	//int nIndex = 0;
+	//while (itc != contours.end())
+	//{
+	//	if ((itc->size() < p_nMin) || (itc->size() > p_nMax))
+	//	{
+	//		//只是遍历没必要踢出队列
+	//		//itc = contours.erase(itc);
+
+	//		//在缺陷图上将不符合条件的部分填充成黑色
+	//		cv::drawContours(*p_mat, contours, nIndex, cv::Scalar(0), CV_FILLED, 8);
+	//	}
+	//	else
+	//	{
+	//		
+
+	//		////标记当前轮廓区域
+	//		//Mat tmatMake = Mat::zeros(p_mat->size(), CV_8UC1);
+	//		//cv::drawContours(tmatMake, contours, nIndex, cv::Scalar(255), CV_FILLED, 8);
+	//		////获取轮廓是否大于最小亮度要求
+	//		//bool t_bMinBright = IsGreaterMinimumBrightness(p_mat, tmatMake, itc,10,20,20,20,10000);
+	//		////如果不符合要求从当前队列中剔除
+	//		//if (!t_bMinBright)
+	//		//{
+	//		//	//只是遍历没必要踢出队列
+	//		//	//itc = contours.erase(itc);
+	//		//}
+	//		//else
+	//		//{
+	//		//	//存储缺陷结果
+	//		//	//SaveDefect(p_nOffsetX, p_nOffsetY, itc);
+
+	//		//}
+	//		//tmatMake.release();
+	//	}
+
+	//	itc++;
+	//	nIndex++;
+	//}
 	return 0;
 }
 
