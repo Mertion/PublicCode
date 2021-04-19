@@ -26,7 +26,7 @@ SystemAlarm* SystemAlarm::initance()
 	if (!m_bISInitance)
 	{
 		m_bISInitance = true;
-		m_pSystemAlarm->m_pCSingletonLogger = CSingletonLoger::initance();
+		m_pSystemAlarm->m_pCThreadLoger = CThreadLoger::initance();
 		m_pSystemAlarm->m_pfuncSetAlarmInfo = NULL;
 		m_pSystemAlarm->m_pWarningIni = new CINIObject();
 		//更新报警信息
@@ -40,7 +40,7 @@ void SystemAlarm::AutomReleaseAlarm(AlarmUnit* p_AlarmUnit)
 {
 	if (NULL != m_pfuncSetAlarmInfo)
 	{
-		m_pCSingletonLogger->Wirtelog(CLoger::ENUM_LOGSWITCH_WARNING, "AlarmNo: %d", p_AlarmUnit->AlarmNo);
+		m_pCThreadLoger->Wirtelog(CLoger::ENUM_LOGSWITCH_WARNING, "AlarmNo: %d", p_AlarmUnit->AlarmNo);
 		m_pfuncSetAlarmInfo((AlarmInfo)(*p_AlarmUnit));
 	}
 
@@ -50,7 +50,7 @@ void SystemAlarm::NormalReleaseAlarm(AlarmUnit* p_AlarmUnit)
 {
 	if (p_AlarmUnit->bRelease)
 	{
-		m_pCSingletonLogger->Wirtelog(CLoger::ENUM_LOGSWITCH_DEBUG, "Normal Alarm No:%d  ", p_AlarmUnit->AlarmNo);
+		m_pCThreadLoger->Wirtelog(CLoger::ENUM_LOGSWITCH_DEBUG, "Normal Alarm No:%d  ", p_AlarmUnit->AlarmNo);
 		p_AlarmUnit->bRelease = FALSE;
 		AutomReleaseAlarm(p_AlarmUnit);
 	}
@@ -60,7 +60,7 @@ void SystemAlarm::ReleaseAlarm(AlarmUnit* p_AlarmUnit)
 {
 	if (!p_AlarmUnit->bRelease)
 	{
-		m_pCSingletonLogger->Wirtelog(CLoger::ENUM_LOGSWITCH_DEBUG, "Release No:%d Alarm ", p_AlarmUnit->AlarmNo);
+		m_pCThreadLoger->Wirtelog(CLoger::ENUM_LOGSWITCH_DEBUG, "Release No:%d Alarm ", p_AlarmUnit->AlarmNo);
 	}
 	p_AlarmUnit->bRelease = TRUE;
 }
@@ -75,7 +75,7 @@ void SystemAlarm::Warning(int p_nWarningNo, CString p_strWarning)
 	AlarmInfo t_AlarmInfo;
 	t_AlarmInfo.AlarmNo = p_nWarningNo;
 	memcpy(t_AlarmInfo.arrchrAlarmInfo, (CStringA)p_strWarning, ((CStringA)p_strWarning).GetLength());
-	m_pCSingletonLogger->Wirtelog(CLoger::ENUM_LOGSWITCH_WARNING, "Warning: No %d, %s", t_AlarmInfo.AlarmNo, t_AlarmInfo.arrchrAlarmInfo);
+	m_pCThreadLoger->Wirtelog(CLoger::ENUM_LOGSWITCH_WARNING, "Warning: No %d, %s", t_AlarmInfo.AlarmNo, t_AlarmInfo.arrchrAlarmInfo);
 	if (NULL != m_pfuncSetAlarmInfo)
 	{
 		m_pfuncSetAlarmInfo(t_AlarmInfo);

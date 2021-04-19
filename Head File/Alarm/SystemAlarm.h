@@ -1,5 +1,6 @@
 #pragma once
 #include "log/CSingletonLoger.h"
+#include "log/CThreadLoger.h"
 #include "FileOperation/CINIObject.h"
 #include "General.h"
 
@@ -79,8 +80,8 @@ private:
 	//是否实例化标志
 	static bool m_bISInitance;
 	//全局日志对象
-	CSingletonLoger* m_pCSingletonLogger;
-	
+	//CSingletonLoger* m_pCSingletonLogger;
+	CThreadLoger * m_pCThreadLoger;
 	//界面报警回调函数指针
 	pfuncSetAlarmInfo m_pfuncSetAlarmInfo;
 	//语言

@@ -102,7 +102,11 @@ int CThreadLoger::ThreadWriteLog()
 	while (m_DQLogInfo.size() > 0)
 	{
 		CStringA strLog = m_DQLogInfo.front().strLog;
-		OnlyWirteToFile(strLog);
+		
+		if ((m_nLogSwitch & m_DQLogInfo.front().LOGSWITCH) > 0)
+		{
+			OnlyWirteToFile(strLog);
+		}
 		m_DQLogInfo.pop_front();
 	}
 	m_csDQLog.Unlock();
