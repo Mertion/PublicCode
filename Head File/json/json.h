@@ -33,6 +33,26 @@
 
 //lzg 20160308 start
 //根据编译器和运行库模式加载不同JSON库
+
+#if (v120_xp == _MSC_PLATFORM_TOOLSET  ) 
+#if _DEBUG && _WIN64 && defined(_MT) && defined(_DLL) && UNICODE
+//#pragma comment(lib,"./Lib/json_vc12_libmdd_Unicode_x64") 
+#pragma comment(lib,"json_vc12_libmdd_Unicode_x64") 
+#endif
+
+#if !_DEBUG && _WIN64 && defined(_MT) && defined(_DLL) && UNICODE
+//#pragma comment(lib,"./Lib/json_vc12_libmdd_Unicode_x64") 
+#pragma comment(lib,"js_vc12_libmdd_Unico_x64_Re") 
+#endif
+
+#elif(_MSC_PLATFORM_TOOLSET == v120)
+
+#else
+
+
+
+
+
 #if (_MSC_VER != 1800) && (_MSC_VER != 1400) && (_MSC_VER != 1914)&& (_MSC_VER != 1923)
 #error Please build the lib switch for model
 #endif
@@ -109,3 +129,6 @@
 //lzg 20160308 end
 
 #endif // JSON_JSON_H_INCLUDED
+
+
+#endif
