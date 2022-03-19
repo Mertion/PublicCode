@@ -183,8 +183,8 @@ int DefectRecognition(Mat* p_mat, Mat* p_matBinaryvalue, const int p_nOffsetX, c
 	//Mat Src(t_matThreshold, true);
 	findContours(t_mat, contours, CV_RETR_LIST, CV_CHAIN_APPROX_NONE);
 
-	int nSize = contours.size();
-	int t_nThreads = 10;
+	int nSize = (int)contours.size();
+	int t_nThreads = 4;
 #pragma omp parallel for num_threads(t_nThreads)
 	for (int i = 0;i<nSize;i++)
 	{

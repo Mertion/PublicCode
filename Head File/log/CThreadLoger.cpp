@@ -92,6 +92,8 @@ void CThreadLoger::CloseFile()
 }
 int CThreadLoger::ThreadWriteLog()
 {
+	m_csFileLog.Lock();
+
 	//此延时是为了让添加日志队列的代码可以同时添加多条信息，以提高多线程并发时记录日志的速度
 	Sleep(10);
 	//打开文件，为了提高效率，日志文件集中打开和关闭
@@ -114,5 +116,6 @@ int CThreadLoger::ThreadWriteLog()
 	//关闭文件
 	CloseFile();
 
+	m_csFileLog.Unlock();
 	return 0;
 }

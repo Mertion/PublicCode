@@ -108,6 +108,20 @@ void CFileOpertion::ClearFile(CString p_strFileName, int p_nDays)
 	t_Finder.Close();
 }
 
+void CFileOpertion::WirteToFile(CStringA p_strLogPath, CStringA p_strLogInfo)
+{
+	FILE* WFile = NULL;
+	critical_section.Lock();
+	//打开文件
+	fopen_s(&WFile, (CStringA)p_strLogPath, "a");
+	if (NULL != WFile)
+	{
+		fwrite(p_strLogInfo, 1, p_strLogInfo.GetLength(), WFile);
+		fwrite("\n", 1, 1, WFile);
+		fclose(WFile);
+	}
+	critical_section.Unlock();
+}
 //
 //CFileOpertion::CFileOpertion()
 //{

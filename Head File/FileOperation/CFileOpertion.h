@@ -1,4 +1,6 @@
 #pragma once
+
+#include <afxmt.h>
 //enum ERROR_LOADDLLFILE
 //{
 //	ERROR_LOADDLLFILE_NOTINIT = -1,
@@ -23,5 +25,10 @@ public:
 	static CString BuildTimeFileName();
 	//定期清理文件
 	static void ClearFile(CString p_strDir, int p_nDays);
+	//写数据到文件
+	void WirteToFile(CStringA p_strLogPath, CStringA p_strLogInfo);
+
+private:
+	CCriticalSection critical_section;
 };
 

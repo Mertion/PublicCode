@@ -135,7 +135,7 @@ int RecognitionFunction::CalculateDistance2Point(Point p_pointA, Point p_pointB,
 	x = p_pointOutput.x;
 	y = p_pointOutput.y;
 
-	Distance = sqrt(x * x + y * y);
+	Distance = (int)sqrt(x * x + y * y);
 	return Distance;
 }
 
@@ -150,7 +150,7 @@ int RecognitionFunction::BuildEnergyCurve(Mat p_matDataSrc, Mat& p_matDst, Mat& 
 		//t_nVal *= 30;
 		//t_nVal /= 255;
 		p_matDst.at<uchar>(t_nVal, t_Point.x) = 255;
-		p_matDstDisplay.at<Vec3b>(t_nVal, t_Point.x) = Vec3b(p_colorDisplay[0], p_colorDisplay[1], p_colorDisplay[2]);
+		p_matDstDisplay.at<Vec3b>(t_nVal, t_Point.x) = Vec3b((uchar)p_colorDisplay[0], (uchar)p_colorDisplay[1], (uchar)p_colorDisplay[2]);
 	}
 	return 0;
 }

@@ -50,6 +50,8 @@ private:
 	DQLogInfo m_DQLogInfo;
 	//发送数据临界区
 	CCriticalSection m_csDQLog;
+	//文件临界区
+	CCriticalSection m_csFileLog;
 	//日志文件
 	FILE *WFile = NULL;
 };
